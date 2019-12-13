@@ -1288,7 +1288,8 @@ cdef class lib:
         slots = []
 
         for slotID in slotIDs:
-            assertRV(_funclist.C_GetSlotInfo(slotID, &info))
+            if _funclist.C_GetSlotInfo(slotID, &info) != CKR_OK:
+                continue
 
             slotDescription = info.slotDescription[:sizeof(info.slotDescription)]
             manufacturerID = info.manufacturerID[:sizeof(info.manufacturerID)]
